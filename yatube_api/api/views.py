@@ -15,22 +15,6 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    @action(detail=True, methods=['POST'])
-    def comments(self, request, pk=None):
-        post = self.get_object()
-
-        comment_serializer = CommentSerializer(data=request.data)
-        if comment_serializer.is_valid():
-            comment_serializer.save(author=request.user, post=post)
-            return Response(
-                comment_serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-        return Response(
-            comment_serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
     def perform_destroy(self, instance):
         if instance.author != self.request.user:
             return Response(status=status.HTTP_403_FORBIDDEN)

@@ -6,10 +6,20 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = DefaultRouter()
 router.register(
     r'^posts/(?P<post_pk>\d+)/comments',
-    CommentViewSet, basename='comments'
+    CommentViewSet,
+    basename='comments'
 )
-router.register(r'posts', PostViewSet)
-router.register(r'groups', GroupViewSet)
+router.register(
+    r'posts',
+    PostViewSet,
+    basename='posts'
+)
+
+router.register(
+    r'groups',
+    GroupViewSet,
+    basename='groups'
+)
 
 
 urlpatterns = [
